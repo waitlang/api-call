@@ -1,13 +1,42 @@
+// html geolocation
 
-const url = "https://api.weatherstack.com/current?access_key=9928388c82f52cd76f6d62a9027b7336&query=New York";
-const options = {
-    method: "GET",
+const x = document.getElementById("demo");
+
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(showPosition);
+  } else {
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+
+function showPosition(position) {
+  x.innerHTML = "Latitude: " + position.coords.latitude +
+  "<br>Longitude: " + position.coords.longitude;
+}
+
+// geosearch api
+
+var url = "https://en.wikipedia.org/w/api.php"; 
+
+var params = {
+    action: "query",
+    list: "geosearch",
+    gscoord: "37.7891838|-122.4033522",
+    gsradius: "10000",
+    gslimit: "10",
+    format: "json"
 };
 
-try {
-    const response = await fetch(url, options);
-    const result = await response.text();
-    console.log(result);
-} catch (error) {
-    console.error(error);
-}
+url = url + "?origin=*";
+Object.keys(params).forEach(function(key){url += "&" + key + "=" + params[key];});
+
+fetch(url)
+    .then(function(response){return response.json();})
+    .then(function(response) {
+        var pages = response.query.geosearch;
+        for (var place in pages) {
+            console.log(pages[place].title);
+        }
+    })
+    .catch(function(error){console.log(error);});
