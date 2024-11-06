@@ -2,6 +2,7 @@
 
 const x = document.getElementById("demo");
 
+
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -13,6 +14,7 @@ function getLocation() {
 function showPosition(position) {
   x.innerHTML = "Latitude: " + position.coords.latitude +
   "<br>Longitude: " + position.coords.longitude;
+  var y = position.coords.latitude + "|" + position.coords.longitude;
 }
 
 // geosearch api
@@ -22,7 +24,7 @@ var url = "https://en.wikipedia.org/w/api.php";
 var params = {
     action: "query",
     list: "geosearch",
-    gscoord: "37.7891838|-122.4033522",
+    gscoord: y,
     gsradius: "10000",
     gslimit: "10",
     format: "json"
