@@ -4,11 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button onclick="getLocation()">Try It</button>
+    <main>
+        <header>
+            <h1>Interesting Thing</h1>
+        </header>
+        <section>
+            <h3>What is the most interesting thing near you?</h3>
+            <button onclick="getLocation()">Allow location</button>
+        </section>
+    </main>
     <h2 id="listTitle"></h2>
     <ul id="demo"></ul>
+    <img id="thingImage" src="" alt="">
 </body>
 <script src="api.js"></script>
 </html>

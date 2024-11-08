@@ -23,9 +23,11 @@ function showPosition(position) {
   const params = {
     action: "query",
     list: "geosearch",
+    prop: "pageimages",
     gscoord: currentCoords,
-    gsradius: "10000",
-    gslimit: "10",
+    gsradius: "2000",
+    gslimit: "1",
+    gssort: "distance",
     format: "json"
   };
 
@@ -36,15 +38,23 @@ function showPosition(position) {
     .then(function (response) { return response.json(); })
     .then(function (response) {
       var pages = response.query.geosearch;
+      var images = response.query.pages
       console.log(pages)
       for (var place in pages) {
-        listTitle.innerText = "WOW LOOK AT ALL THESE INTERESTING PLACES! YOU'VE GOT"
+        listTitle.innerText = "The most interesting place is " + pages[place].dist + " meters away"
         // console.log(pages[place].title);
         let li = document.createElement('li');
             li.innerText = pages[place].title
             x.appendChild(li);
         // x.innerHTML = pages[place].title
+        
       }
+      for (var page in images) {
+        console.log(pages[page].title + ": " + pages[page].thumbnail.source);
+        let img = document.getElementById("thingImage");
+        img.innerHTML = images[page].thumbnail.source
+        console.log(images[page].thumbnail.source);
+    }
     })
     .catch(function (error) { console.log(error); });
   // console.log(pages) 
