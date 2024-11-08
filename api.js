@@ -1,6 +1,6 @@
 // html geolocation
 
-const x = document.getElementById("demo");
+let x = document.getElementById("demo");
 
 
 function getLocation() {
@@ -12,33 +12,41 @@ function getLocation() {
 }
 
 function showPosition(position) {
-  x.innerHTML = "Latitude: " + position.coords.latitude +
-  "<br>Longitude: " + position.coords.longitude;
-  var y = position.coords.latitude + "|" + position.coords.longitude;
-}
+  // x.innerHTML = "Latitude: " + position.coords.latitude +
+  //   "<br>Longitude: " + position.coords.longitude;
+  const currentCoords = position.coords.latitude + "|" + position.coords.longitude;
 
-// geosearch api
+  // geosearch api
 
-var url = "https://en.wikipedia.org/w/api.php"; 
+  let url = "https://en.wikipedia.org/w/api.php";
 
-var params = {
+  const params = {
     action: "query",
     list: "geosearch",
-    gscoord: y,
+    gscoord: currentCoords,
     gsradius: "10000",
     gslimit: "10",
     format: "json"
-};
+  };
 
-url = url + "?origin=*";
-Object.keys(params).forEach(function(key){url += "&" + key + "=" + params[key];});
+  url = url + "?origin=*";
+  Object.keys(params).forEach(function (key) { url += "&" + key + "=" + params[key]; });
 
-fetch(url)
-    .then(function(response){return response.json();})
-    .then(function(response) {
-        var pages = response.query.geosearch;
-        for (var place in pages) {
-            console.log(pages[place].title);
-        }
+  fetch(url)
+    .then(function (response) { return response.json(); })
+    .then(function (response) {
+      var pages = response.query.geosearch;
+      console.log(pages)
+      for (var place in pages) {
+        listTitle.innerText = "WOW LOOK AT ALL THESE INTERESTING PLACES! YOU'VE GOT"
+        // console.log(pages[place].title);
+        let li = document.createElement('li');
+            li.innerText = pages[place].title
+            x.appendChild(li);
+        // x.innerHTML = pages[place].title
+      }
     })
-    .catch(function(error){console.log(error);});
+    .catch(function (error) { console.log(error); });
+  // console.log(pages) 
+
+}
