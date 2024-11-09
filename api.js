@@ -1,6 +1,6 @@
 // html geolocation
 
-let x = document.getElementById("demo");
+let x = document.getElementById("thingTitle");
 
 
 function getLocation() {
@@ -23,7 +23,6 @@ function showPosition(position) {
   const params = {
     action: "query",
     list: "geosearch",
-    prop: "pageimages",
     gscoord: currentCoords,
     gsradius: "2000",
     gslimit: "1",
@@ -38,25 +37,43 @@ function showPosition(position) {
     .then(function (response) { return response.json(); })
     .then(function (response) {
       var pages = response.query.geosearch;
-      var images = response.query.pages
-      console.log(pages)
+
       for (var place in pages) {
         listTitle.innerText = "The most interesting place is " + pages[place].dist + " meters away"
-        // console.log(pages[place].title);
-        let li = document.createElement('li');
-            li.innerText = pages[place].title
-            x.appendChild(li);
-        // x.innerHTML = pages[place].title
+        x.innerHTML = pages[place].title
         
       }
-      for (var page in images) {
-        console.log(pages[page].title + ": " + pages[page].thumbnail.source);
-        let img = document.getElementById("thingImage");
-        img.innerHTML = images[page].thumbnail.source
-        console.log(images[page].thumbnail.source);
-    }
+
     })
     .catch(function (error) { console.log(error); });
   // console.log(pages) 
+
+  // image geosearch 
+
+  let img_url = "https://en.wikipedia.org/w/api.php";
+
+  const img_params = {
+    action: "query",
+    generator: "geosearch",
+    prop: "pageimages",
+    gscoord: currentCoords,
+    format: "json"
+  };
+
+  img_url = img_url + "?origin=*";
+  Object.keys(img_params).forEach(function (key) { img_url += "&" + key + "=" + img_params[key]; });
+
+  fetch(img_url)
+    .then(function (response) { return response.json(); })
+    .then(function (response) {
+      var images = response.query.pages;
+      for (var page in images) {
+        let img = document.getElementById("thingImage");
+        img.innerHTML = images[page]
+        console.log(images[page].title + ": " + images[page].thumbnail.source);
+        console.log("bayog")
+      }
+    })
+    .catch(function (error) { console.log(error); });
 
 }
