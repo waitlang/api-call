@@ -15,12 +15,15 @@
             <h3>What is the most interesting thing near you?</h3>
             <button onclick="getLocation()">Allow location</button>
         </section>
+        <div class="apiResult">
+            <h2 id="thingMessage"></h2>
+            <div class="thingPage">
+                <h3 id="thingTitle"></h3>
+                <p id="thingDist"></p>
+                <img id="thingImage" style="display: none;" src="" alt="Placeholder image because image search APIs need auth"></img>
+            </div>
+        </div>
     </main>
-    <div class="apiResult">
-        <h2 id="listTitle"></h2>
-        <p id="thingTitle"></p>
-        <img id="thingImage" src="https://picsum.photos/seed/picsum/200/300" alt="Placeholder image because image search APIs need auth">
-    </div>
 </body>
 <script src="api.js"></script>
 </html>

@@ -5,6 +5,27 @@
 main {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    
+    justify-content: space-around;
+    margin-block: 40px;
+    text-align: center;
+    align-items: center ;
+}
+
+main h1 {
+    margin: 30px;
+}
+
+.thingPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: space-between;
+}
+
+img {
+    margin-inline: 20px;
+}
+
+.thingContent {
+    text-align: left;
 }

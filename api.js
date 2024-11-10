@@ -1,13 +1,16 @@
 // html geolocation
 
-let x = document.getElementById("thingTitle");
+let message = document.getElementById("thingMessage");
+let thing = document.getElementById("thingTitle");
+let dist = document.getElementById("thingDist");
+let image = document.getElementById("thingImage");
 
 
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
   } else {
-    x.innerHTML = "Geolocation is not supported by this browser.";
+    message.innerHTML = "Geolocation is not supported by this browser.";
   }
 }
 
@@ -39,40 +42,14 @@ function showPosition(position) {
       var pages = response.query.geosearch;
 
       for (var place in pages) {
-        listTitle.innerText = "The most interesting place is " + pages[place].dist + " meters away"
-        x.innerHTML = pages[place].title
-        
+        message.innerText = "The most interesting place near you is"
+        thing.innerHTML = pages[place].title
+        dist.innerHTML = pages[place].dist + "meters away"
+        image.src = "https://picsum.photos/seed/" + Math.floor(Math.random() * 100) + "/200/200";
+        image.style = "display: block;"
+
       }
 
-    })
-    .catch(function (error) { console.log(error); });
-  // console.log(pages) 
-
-  // image geosearch 
-
-  let img_url = "https://en.wikipedia.org/w/api.php";
-
-  const img_params = {
-    action: "query",
-    generator: "geosearch",
-    prop: "pageimages",
-    gscoord: currentCoords,
-    format: "json"
-  };
-
-  img_url = img_url + "?origin=*";
-  Object.keys(img_params).forEach(function (key) { img_url += "&" + key + "=" + img_params[key]; });
-
-  fetch(img_url)
-    .then(function (response) { return response.json(); })
-    .then(function (response) {
-      var images = response.query.pages;
-      for (var page in images) {
-        let img = document.getElementById("thingImage");
-        img.innerHTML = images[page]
-        console.log(images[page].title + ": " + images[page].thumbnail.source);
-        console.log("bayog")
-      }
     })
     .catch(function (error) { console.log(error); });
 
